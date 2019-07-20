@@ -24,7 +24,7 @@ import com.coupons.sys.exeptions.CouponsSystemException;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminService {
-private AdminFacade adminFacade=new AdminFacade();
+private AdminFacade adminFacade;
 @Path("login")
 @POST
 	public ClientFacade login(String email, String password,ClientType clientType) throws CouponsSystemException
