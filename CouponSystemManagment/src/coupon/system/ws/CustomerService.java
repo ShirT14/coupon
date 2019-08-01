@@ -15,7 +15,7 @@ import com.coupons.sys.clients.ClientType;
 import com.coupons.sys.clients.CustomerFacade;
 import com.coupons.sys.clients.LoginManager;
 import com.coupons.sys.exeptions.CouponsSystemException;
-import com.mysql.fabric.Response;
+
 
 @Path("customer-sec")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -61,7 +61,7 @@ public class CustomerService {
 	@POST
 	public Response getAllCustomerCoupons() {
 		 try {
-			;
+			
 			return  Response.status(Response.Status.OK).entity((customerFacade.getAllCustomerCoupons())).build();
 		} catch (CouponsSystemException e) {
 			// TODO Auto-generated catch block
