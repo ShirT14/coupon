@@ -3,9 +3,11 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 
@@ -23,15 +25,15 @@ import com.coupons.sys.exeptions.CouponsSystemException;
 public class CustomerService {
 	private CustomerFacade customerFacade;
 
-	@Path("login")
-	@POST
-	public CustomerFacade login(String email, String password, ClientType clientType) throws CouponsSystemException {
-		return customerFacade = (CustomerFacade) LoginManager.getInstance().logIn(email, password, clientType);
-
-	}
+//	@Path("login")
+//	@POST
+//	public CustomerFacade login(String email, String password, ClientType clientType) throws CouponsSystemException {
+//		return customerFacade = (CustomerFacade) LoginManager.getInstance().logIn(email, password, clientType);
+//
+//	}
 
 	@Path("get-customer")
-	@POST
+	@GET
 	public Response getCustomer()  {
 		
 		try {
@@ -44,8 +46,8 @@ public class CustomerService {
 	}
 
 	@Path("get-all-coupons-by-max-price")
-	@POST
-	public Response getAllCouponsByMaxPrice(Double maxPrice)  {
+	@GET
+	public Response getAllCouponsByMaxPrice(@QueryParam ("maxPrice") Double maxPrice)  {
 		try {
 			
 			return  Response.status(Response.Status.OK).entity(customerFacade.getAllCoupon(maxPrice)).build();
@@ -58,7 +60,7 @@ public class CustomerService {
 	}
 
 	@Path("get-all-customer-coupons")
-	@POST
+	@GET
 	public Response getAllCustomerCoupons() {
 		 try {
 			
@@ -71,9 +73,11 @@ public class CustomerService {
 
 	}
 
-	@Path("get-all-coupons-by-max-price")
-	@POST
-	public Response purchaseCoupon(Coupon coupon) {
+	@Path("purchase-coupon")
+	@GET
+	
+	public Response purchaseCoupon( Coupon coupon) {
+		
 		try {
 			customerFacade.purchaseCoupon(coupon);
 			return  Response.status(Response.Status.OK).build();

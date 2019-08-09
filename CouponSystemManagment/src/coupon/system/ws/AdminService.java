@@ -1,19 +1,20 @@
 package coupon.system.ws;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import com.coupons.sys.beans.Company;
 import com.coupons.sys.beans.Customer;
 import com.coupons.sys.clients.AdminFacade;
@@ -27,15 +28,15 @@ import com.coupons.sys.exeptions.CouponsSystemException;
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminService {
 private AdminFacade adminFacade;
-@Path("login")
+//@Path("login")
+//@POST
+//	public ClientFacade login(String email, String password,ClientType clientType) throws CouponsSystemException
+//	{this.adminFacade= (AdminFacade) LoginManager.getInstance().logIn(email, password, clientType);
+//	return this.adminFacade;
+//	}
+@Path ("add-company")
 @POST
-	public ClientFacade login(String email, String password,ClientType clientType) throws CouponsSystemException
-	{this.adminFacade= (AdminFacade) LoginManager.getInstance().logIn(email, password, clientType);
-	return this.adminFacade;
-	}
-@Path("add-company")
-@POST
-public Response addCompany(Company company) 
+public Response addCompany( Company company) 
 {
 	try {
 		this.adminFacade.addCompany(company);
@@ -46,8 +47,8 @@ public Response addCompany(Company company)
 	}
 	}
 @Path("delete-company")
-@POST
-public Response deleteCompany(int companyId) 
+@DELETE
+public Response deleteCompany(@QueryParam ("companyId") int companyId) 
 {
 	try {
 		this.adminFacade.deleteCompany(companyId);
@@ -60,7 +61,7 @@ public Response deleteCompany(int companyId)
 	}
 	@Path("add-customer")
 	@POST
-public Response addCustomer(Customer customer) 
+public Response addCustomer( Customer customer) 
 {
 		try {
 			this.adminFacade.addCustomer(customer);
@@ -71,8 +72,8 @@ public Response addCustomer(Customer customer)
 		}
 	}
 	@Path("delete-customer")
-	@POST
-	public Response deleteCustomer(int customerId)
+	@DELETE
+	public Response deleteCustomer(@QueryParam("customerId") int customerId)
 	{
 		try {
 			this.adminFacade.deleteCustomer(customerId);
@@ -113,7 +114,7 @@ public Response addCustomer(Customer customer)
 	}
 	@Path("get-customer")
 	@GET
-	public Response getCustomer(int customerId)
+	public Response getCustomer(@QueryParam("customerId") int customerId)
 	{
 		 try {
 			this.adminFacade.getOneCustomer(customerId);
@@ -127,7 +128,7 @@ public Response addCustomer(Customer customer)
 	
 	@Path("get-company")
 	@GET
-	public Response getCompany(int companyId)  
+	public Response getCompany(@QueryParam("companyId") int companyId)  
 	{
 		try {
 			;
@@ -141,7 +142,7 @@ public Response addCustomer(Customer customer)
 	}
 	@Path("update-company")
 	@PUT
-	public Response updateCompany(Company company) 
+	public Response updateCompany( Company company) 
 	{
 		try {
 			this.adminFacade.updateCompany(company);
@@ -154,7 +155,7 @@ public Response addCustomer(Customer customer)
 	}
 	@Path("update-customer")
 	@PUT
-	public Response updateCustomer(Customer customer) 
+	public Response updateCustomer( Customer customer) 
 	{
 		try {
 			this.adminFacade.updateCustomer(customer);

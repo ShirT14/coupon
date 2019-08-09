@@ -7,6 +7,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,13 +23,13 @@ import com.coupons.sys.exeptions.CouponsSystemException;
 @Produces(MediaType.APPLICATION_JSON)
 public class CompanyService {
 	private CompanyFacade companyFacade;
-
-	@Path("login")
-	@POST
-	public ClientFacade login(String email, String password, ClientType clientType) throws CouponsSystemException {
-		this.companyFacade = (CompanyFacade) LoginManager.getInstance().logIn(email, password, clientType);
-		return this.companyFacade;
-	}
+//
+//	@Path("login")
+//	@POST
+//	public ClientFacade login(String email, String password, ClientType clientType) throws CouponsSystemException {
+//		this.companyFacade = (CompanyFacade) LoginManager.getInstance().logIn(email, password, clientType);
+//		return this.companyFacade;
+//	}
 
 	@Path("get-company")
 	@GET
@@ -56,7 +57,7 @@ public class CompanyService {
 
 	@Path("coupon-by-max-price")
 	@GET
-	public Response getCouponsByMaxPrice(Double maxPrice) {
+	public Response getCouponsByMaxPrice(@QueryParam ("maxPrice") Double maxPrice) {
 
 		try {
 			return Response.status(Response.Status.OK).entity(this.companyFacade.getCompanyCoupons(maxPrice)).build();
@@ -68,7 +69,7 @@ public class CompanyService {
 
 	@Path("get-coupon-by-category")
 	@GET
-	public Response GetCouponsByCategory(int categoryId) {
+	public Response GetCouponsByCategory( @ QueryParam("categoryId") int categoryId) {
 		try {
 			return Response.status(Response.Status.OK).entity(this.companyFacade.getCompanyCoupons(categoryId)).build();
 		} catch (CouponsSystemException e) {
@@ -91,7 +92,7 @@ public class CompanyService {
 
 	@Path("update-coupon")
 	@PUT
-	public Response updateCoupon(Coupon coupon) {
+	public Response updateCoupon( Coupon coupon) {
 		try {
 			this.companyFacade.updateCoupon(coupon);
 			return Response.status(Response.Status.OK).build();
@@ -104,7 +105,7 @@ public class CompanyService {
 
 	@Path("delete-coupon")
 	@DELETE
-	public Response deleteCoupon(int couponId) {
+	public Response deleteCoupon( @QueryParam("couponId") int couponId) {
 		try {
 			this.companyFacade.deleteCoupon(couponId);
 			return Response.status(Response.Status.OK).build();
