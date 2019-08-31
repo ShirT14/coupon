@@ -1,29 +1,30 @@
 package coupon.system.ws;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.coupons.sys.beans.Coupon;
+import com.coupons.sys.clients.CustomerFacade;
+import com.coupons.sys.exeptions.CouponsSystemException;
+
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-
-import com.coupons.sys.beans.Coupon;
-import com.coupons.sys.beans.Customer;
-import com.coupons.sys.clients.ClientType;
-import com.coupons.sys.clients.CustomerFacade;
-import com.coupons.sys.clients.LoginManager;
-import com.coupons.sys.exeptions.CouponsSystemException;
 
 
-@Path("customer-sec")
+@Path("sec/customer-service")
+
 @Consumes(MediaType.APPLICATION_JSON)
+
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerService {
-	private CustomerFacade customerFacade;
+@Context HttpServletRequest req;
+private CustomerFacade customerFacade=(CustomerFacade) req.getSession().getAttribute("clientFacade");
 
 //	@Path("login")
 //	@POST
@@ -64,7 +65,7 @@ public class CustomerService {
 	public Response getAllCustomerCoupons() {
 		 try {
 			
-			return  Response.status(Response.Status.OK).entity((customerFacade.getAllCustomerCoupons())).build();
+			return  Response.status(Response.Status.OK).entity(customerFacade.getAllCustomerCoupons()).build();
 		} catch (CouponsSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

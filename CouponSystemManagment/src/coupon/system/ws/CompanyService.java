@@ -1,5 +1,6 @@
 package coupon.system.ws;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -8,6 +9,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,19 +20,21 @@ import com.coupons.sys.clients.CompanyFacade;
 import com.coupons.sys.clients.LoginManager;
 import com.coupons.sys.exeptions.CouponsSystemException;
 
-@Path("company")
+
+
+@Path("sec/company-service")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CompanyService {
-	private CompanyFacade companyFacade;
-//
-//	@Path("login")
-//	@POST
-//	public ClientFacade login(String email, String password, ClientType clientType) throws CouponsSystemException {
-//		this.companyFacade = (CompanyFacade) LoginManager.getInstance().logIn(email, password, clientType);
-//		return this.companyFacade;
-//	}
+	@Context HttpServletRequest req;
+	private CompanyFacade companyFacade=(CompanyFacade)req.getSession().getAttribute("clientFacade");
+	
+	
+	
+	
 
+
+	
 	@Path("get-company")
 	@GET
 	public Response getComany() {
